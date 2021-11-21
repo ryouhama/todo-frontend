@@ -1,6 +1,6 @@
 export interface AuthState {
 	user: User;
-	accessKey: string,
+	accessToken: string,
 	loading: AuthLoading
 }
 export interface AuthLoading {
