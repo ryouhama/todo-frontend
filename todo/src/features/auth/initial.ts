@@ -1,0 +1,19 @@
+import { User, AuthLoading, AuthState } from './state'
+
+export const initialUser: User = {
+    name: '',
+    email: '',
+    password: ''
+}
+
+export const initialLoading: AuthLoading = {
+    post: {
+        signIn: false
+    }
+}
+
+export const initialState: AuthState = {
+    user: initialUser,
+    accessKey: '',
+    loading: initialLoading
+};

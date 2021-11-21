@@ -10,17 +10,17 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { SignInForm } from 'types/auth';
+import { useAppDispatch } from 'app/hooks';
+import { signInAsync } from 'features/auth/authSlice'
 
 const theme = createTheme();
 
-type Inputs = {
-  email: string,
-  password: string,
-}
-
 export const SignIn: React.FC = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const dispatch = useAppDispatch()
+  const { register, handleSubmit } = useForm<SignInForm>();
+  const onSubmit: SubmitHandler<SignInForm> = data => dispatch(signInAsync({ data }));
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,6 +40,7 @@ export const SignIn: React.FC = () => {
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
+              label="email"
               fullWidth
               autoComplete="email"
               autoFocus
@@ -49,6 +50,7 @@ export const SignIn: React.FC = () => {
             />
             <TextField
               margin="normal"
+              label="password"
               fullWidth
               type="password"
               autoComplete="current-password"
@@ -75,8 +77,8 @@ export const SignIn: React.FC = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to='/sign-up'>
-                  {"Don't have an account? Sign Up"}
+                <Link to='/sign-up/'>
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>

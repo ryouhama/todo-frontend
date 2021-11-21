@@ -3,13 +3,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from 'react-router-dom'
 
 const theme = createTheme();
 
@@ -45,6 +45,7 @@ export const SignUp: React.FC = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
+                  label="first name"
                   fullWidth
                   autoFocus
                   {...register('firstName', { required: true })}
@@ -53,6 +54,7 @@ export const SignUp: React.FC = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  label="last name"
                   autoComplete="family-name"
                   {...register('lastName', { required: true })}
                 />
@@ -60,6 +62,7 @@ export const SignUp: React.FC = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  label="email"
                   autoComplete="email"
                   {...register('email', { required: true })}
                 />
@@ -68,6 +71,7 @@ export const SignUp: React.FC = () => {
                 <TextField
                   fullWidth
                   type="password"
+                  label="password"
                   autoComplete="new-password"
                   {...register('password', { required: true })}
                 />
@@ -89,7 +93,7 @@ export const SignUp: React.FC = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to='/sign-in/'>
                   Already have an account? Sign in
                 </Link>
               </Grid>
