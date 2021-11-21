@@ -14,6 +14,6 @@ export const initialLoading: AuthLoading = {
 
 export const initialState: AuthState = {
     user: initialUser,
-    accessKey: '',
+    accessToken: '',
     loading: initialLoading
 };

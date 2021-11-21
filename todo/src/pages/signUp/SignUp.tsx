@@ -93,7 +93,7 @@ export const SignUp: React.FC = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to='/sign-in/'>
+                <Link to='/'>
                   Already have an account? Sign in
                 </Link>
               </Grid>
