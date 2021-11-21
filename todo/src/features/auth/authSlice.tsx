@@ -32,7 +32,7 @@ export const authSlice = createSlice({
       .addCase(signInAsync.fulfilled, (state, action) => {
         state.loading.post.signIn = false
         state.user = action.payload.user
-        state.accessKey = action.payload.accessToken
+        state.accessToken = action.payload.accessToken
       })
       .addCase(signInAsync.rejected, (state, action) => {
         state.loading.post.signIn = false
