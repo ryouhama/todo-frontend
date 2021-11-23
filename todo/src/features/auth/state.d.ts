@@ -1,17 +1,14 @@
+import { User} from 'types/user'
+
 export interface AuthState {
-	user: User;
-	accessToken: string,
+	user: User
 	loading: AuthLoading
 }
+
 export interface AuthLoading {
 	post: {
 		signIn: boolean
 		signUp: boolean
 
 	}
-}
-export interface User {
-	name: string;
-	email: string;
-	password: string;
 }

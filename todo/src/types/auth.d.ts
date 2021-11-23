@@ -1,5 +1,10 @@
 import { User } from 'features/auth/authSlice'
 
+// Interface
+export interface LocalStorage {
+  accessToken: string
+}
+
 // From Interface
 export interface SignInForm {
   email: string
