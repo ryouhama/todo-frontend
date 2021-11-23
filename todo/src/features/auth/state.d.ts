@@ -6,6 +6,8 @@ export interface AuthState {
 export interface AuthLoading {
 	post: {
 		signIn: boolean
+		signUp: boolean
+
 	}
 }
 export interface User {

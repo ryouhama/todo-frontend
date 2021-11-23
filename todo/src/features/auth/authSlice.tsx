@@ -54,6 +54,19 @@ export const authSlice = createSlice({
       .addCase(signInAsync.rejected, (state, action) => {
         state.loading.post.signIn = false
         console.log(action.payload?.errorMessage)
+      })
+      .addCase(signUpAsync.pending, (state) => {
+        state.loading.post.signUp = true
+      })
+      .addCase(signUpAsync.fulfilled, (state, action) => {
+        state.loading.post.signUp = false
+        state.user = action.payload.user
+        state.accessToken = action.payload.accessToken
+
+      })
+      .addCase(signUpAsync.rejected, (state, action) => {
+        state.loading.post.signUp = false
+        console.log(action.payload?.errorMessage)
       });
   },
 });

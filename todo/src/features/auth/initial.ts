@@ -8,7 +8,8 @@ export const initialUser: User = {
 
 export const initialLoading: AuthLoading = {
     post: {
-        signIn: false
+        signIn: false,
+        signUp: false
     }
 }
 
