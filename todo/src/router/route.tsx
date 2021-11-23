@@ -1,8 +1,7 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { SignIn } from 'pages/signIn'
-import { SignUp } from 'pages/signUp/SignUp';
-import { useAppSelector } from 'app/hooks';
-
+import { SignUp } from 'pages/signUp/SignUp'
+import { useAppSelector } from 'app/hooks'
 
 export const AppRouter: React.VFC = () => {
   const hasAccessToken = useAppSelector((state) => state.auth.accessToken)
@@ -20,9 +19,7 @@ export const AppRouter: React.VFC = () => {
           <Route path="/" element={<SignIn />} />
           <Route path="/sign-up/" element={<SignUp />} />
         </Routes>
-      )
-      }
-    </BrowserRouter >
+      )}
+    </BrowserRouter>
   )
-
-};
+}
