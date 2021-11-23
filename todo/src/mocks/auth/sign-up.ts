@@ -1,11 +1,11 @@
 import { MockMethods, MockResponse } from 'axios-mock-server';
-import { SignInRequest, SignInResponse } from 'types/auth'
+import { SignUpRequest, SignUpResponse } from 'types/auth'
 
 const signIn: MockMethods = {
-  post: async (request: SignInRequest): Promise<MockResponse> => {
-    const response: SignInResponse = {
+  post: async (request: SignUpRequest): Promise<MockResponse> => {
+    const response: SignUpResponse = {
       user: {
-        name: 'テスト太郎',
+        name: request.data.name,
         email: request.data.email,
         password: request.data.password
       },
