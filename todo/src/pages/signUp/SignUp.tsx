@@ -10,20 +10,17 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom'
+import { SignUpForm } from 'types/auth'
+import { useAppDispatch } from 'app/hooks';
+import { signUpAsync } from 'features/auth/authSlice';
 
 const theme = createTheme();
 
-type Inputs = {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string
-}
-
 export const SignUp: React.FC = () => {
 
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  const dispatch = useAppDispatch()
+  const { register, handleSubmit } = useForm<SignUpForm>()
+  const onSubmit: SubmitHandler<SignUpForm> = data => dispatch(signUpAsync({ data }))
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,21 +39,12 @@ export const SignUp: React.FC = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  label="first name"
-                  fullWidth
-                  autoFocus
-                  {...register('firstName', { required: true })}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="last name"
-                  autoComplete="family-name"
-                  {...register('lastName', { required: true })}
+                  label="name"
+                  autoComplete="name"
+                  {...register('name', { required: true })}
                 />
               </Grid>
               <Grid item xs={12}>

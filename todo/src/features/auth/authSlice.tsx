@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { SignInRequest, SignInResponse } from 'types/auth';
+import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from 'types/auth';
 import { api } from './authAPI'
 import { initialState } from './initial'
 
@@ -14,11 +14,28 @@ export const signInAsync = createAsyncThunk<
       .then((res) => {
         return res.data
       }).catch(e => {
-        return thunkApi.rejectWithValue({ errorMessage: 'Auth Error' })
+        return thunkApi.rejectWithValue({ errorMessage: 'Auth Error: Sign In' })
       })
     return response
   }
 );
+
+export const signUpAsync = createAsyncThunk<
+  SignUpResponse,
+  SignUpRequest,
+  { rejectValue: { errorMessage: string } }
+>(
+  'auth/signUp',
+  async (data, thunkApi) => {
+    const response = await api.signUp(data)
+      .then((res) => {
+        return res.data
+      }).catch(e => {
+        return thunkApi.rejectWithValue({ errorMessage: 'Auth Error: Sign Up' })
+      })
+    return response
+  }
+)
 
 export const authSlice = createSlice({
   name: 'auth',
