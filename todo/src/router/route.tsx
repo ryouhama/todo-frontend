@@ -11,7 +11,7 @@ export const AppRouter: React.VFC = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       {hasToken ? (
         <Routes>
-          <Route path="/" element={<DashBoad/ >} />
+          <Route path="/board/" element={<DashBoad/ >} />
         </Routes>
       ) : (
         <Routes>
