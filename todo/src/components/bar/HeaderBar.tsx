@@ -1,14 +1,13 @@
-import { styled } from '@mui/material/styles';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
-
+import { styled } from '@mui/material/styles'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Typography from '@mui/material/Typography'
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-  drawerWidth: number;
+  open?: boolean
+  drawerWidth: number
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -27,13 +26,13 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-}));
+}))
 
 interface HeaderBarProps {
-  open: boolean;
-  toggle: () => void;
-  drawerWidth: number;
-  boardName?: string;
+  open: boolean
+  toggle: () => void
+  drawerWidth: number
+  boardName?: string
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = (props) => {

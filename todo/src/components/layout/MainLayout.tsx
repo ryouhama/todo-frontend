@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
 
 export const MainLayout: React.FC = (props) => {
   const { children } = props
@@ -17,7 +17,7 @@ export const MainLayout: React.FC = (props) => {
         overflow: 'auto',
       }}
     >
-      <Toolbar/>
+      <Toolbar />
       {children}
     </Box>
   )
