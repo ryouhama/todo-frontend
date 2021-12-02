@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { setAccessToken } from 'router/storage';
 import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from 'types/auth';
 import { api } from './authAPI'
 import { initialState } from './initial'
@@ -49,7 +50,7 @@ export const authSlice = createSlice({
       .addCase(signInAsync.fulfilled, (state, action) => {
         state.loading.post.signIn = false
         state.user = action.payload.user
-        state.accessToken = action.payload.accessToken
+        setAccessToken({accessToken: action.payload.accessToken})
       })
       .addCase(signInAsync.rejected, (state, action) => {
         state.loading.post.signIn = false
@@ -61,8 +62,7 @@ export const authSlice = createSlice({
       .addCase(signUpAsync.fulfilled, (state, action) => {
         state.loading.post.signUp = false
         state.user = action.payload.user
-        state.accessToken = action.payload.accessToken
-
+        setAccessToken({accessToken: action.payload.accessToken})
       })
       .addCase(signUpAsync.rejected, (state, action) => {
         state.loading.post.signUp = false

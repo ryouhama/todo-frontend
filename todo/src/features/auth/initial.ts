@@ -1,9 +1,10 @@
-import { User, AuthLoading, AuthState } from './state'
+import { AuthLoading, AuthState } from './state'
+import { User } from 'types/user'
 
 export const initialUser: User = {
+    id: -1,
     name: '',
     email: '',
-    password: ''
 }
 
 export const initialLoading: AuthLoading = {
@@ -15,6 +16,5 @@ export const initialLoading: AuthLoading = {
 
 export const initialState: AuthState = {
     user: initialUser,
-    accessToken: '',
     loading: initialLoading
 };

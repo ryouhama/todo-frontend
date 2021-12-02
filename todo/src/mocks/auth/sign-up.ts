@@ -5,9 +5,9 @@ const signIn: MockMethods = {
   post: async (request: SignUpRequest): Promise<MockResponse> => {
     const response: SignUpResponse = {
       user: {
+        id: 1,
         name: request.data.name,
-        email: request.data.email,
-        password: request.data.password
+        email: request.data.email
       },
       accessToken: 'hogehoge'
     }

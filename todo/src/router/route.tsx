@@ -1,18 +1,17 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp/SignUp'
-import { useAppSelector } from 'app/hooks'
+import { Container as DashBoad} from 'pages/dsshBoad'
+import { hasAccessToken } from './storage'
 
 export const AppRouter: React.VFC = () => {
-  const hasAccessToken = useAppSelector((state) => state.auth.accessToken)
+  const hasToken = hasAccessToken()
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {hasAccessToken ? (
+      {hasToken ? (
         <Routes>
-          <Route path="/" element={<>Welcom to my app</>} />
-          <Route path="/board" element={<>board</>} />
-          <Route path="/task" element={<>task</>} />
+          <Route path="/board/" element={<DashBoad/ >} />
         </Routes>
       ) : (
         <Routes>
