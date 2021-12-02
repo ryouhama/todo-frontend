@@ -1,14 +1,13 @@
-import { User} from 'types/user'
+import { User } from 'types/user'
 
 export interface AuthState {
-	user: User
-	loading: AuthLoading
+  user: User
+  loading: AuthLoading
 }
 
 export interface AuthLoading {
-	post: {
-		signIn: boolean
-		signUp: boolean
-
-	}
+  post: {
+    signIn: boolean
+    signUp: boolean
+  }
 }

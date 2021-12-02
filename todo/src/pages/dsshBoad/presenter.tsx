@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PeopleIcon from '@mui/icons-material/People';
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import PeopleIcon from '@mui/icons-material/People'
 import { AppLayout, MainLayout } from 'components/layout'
 import { HeaderBar, SideBar } from 'components/bar'
-
 
 export const Presenter: React.FC = (props) => {
   const drawerWidth = 240
@@ -15,7 +14,7 @@ export const Presenter: React.FC = (props) => {
 
   return (
     <AppLayout>
-      <HeaderBar open={open} toggle={toggle} drawerWidth={drawerWidth}/>
+      <HeaderBar open={open} toggle={toggle} drawerWidth={drawerWidth} />
       <SideBar open={open} toggle={toggle} drawerWidth={drawerWidth}>
         <ListItem button>
           <ListItemIcon>
@@ -30,9 +29,7 @@ export const Presenter: React.FC = (props) => {
           <ListItemText primary="Members" />
         </ListItem>
       </SideBar>
-      <MainLayout>
-        hogehoge
-      </MainLayout>
+      <MainLayout>hogehoge</MainLayout>
     </AppLayout>
   )
 }

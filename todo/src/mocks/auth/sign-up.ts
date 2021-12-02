@@ -1,4 +1,4 @@
-import { MockMethods, MockResponse } from 'axios-mock-server';
+import { MockMethods, MockResponse } from 'axios-mock-server'
 import { SignUpRequest, SignUpResponse } from 'types/auth'
 
 const signIn: MockMethods = {
@@ -7,12 +7,12 @@ const signIn: MockMethods = {
       user: {
         id: 1,
         name: request.data.name,
-        email: request.data.email
+        email: request.data.email,
       },
-      accessToken: 'hogehoge'
+      accessToken: 'hogehoge',
     }
     return [200, response]
-  }
+  },
 }
 
 export default signIn
