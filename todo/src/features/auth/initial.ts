@@ -1,19 +1,20 @@
-import { User, AuthLoading, AuthState } from './state'
+import { AuthLoading, AuthState } from './state'
+import { User } from 'types/user'
 
 export const initialUser: User = {
-    name: '',
-    email: '',
-    password: ''
+  id: -1,
+  name: '',
+  email: '',
 }
 
 export const initialLoading: AuthLoading = {
-    post: {
-        signIn: false
-    }
+  post: {
+    signIn: false,
+    signUp: false,
+  },
 }
 
 export const initialState: AuthState = {
-    user: initialUser,
-    accessToken: '',
-    loading: initialLoading
-};
+  user: initialUser,
+  loading: initialLoading,
+}

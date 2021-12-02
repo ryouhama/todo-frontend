@@ -1,26 +1,26 @@
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from 'react-router-dom';
-import { SignInForm } from 'types/auth';
-import { useAppDispatch } from 'app/hooks';
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { SignInForm } from 'types/auth'
+import { useAppDispatch } from 'app/hooks'
 import { signInAsync } from 'features/auth/authSlice'
 
-const theme = createTheme();
+const theme = createTheme()
 
 export const SignIn: React.FC = () => {
-
   const dispatch = useAppDispatch()
-  const { register, handleSubmit } = useForm<SignInForm>();
-  const onSubmit: SubmitHandler<SignInForm> = data => dispatch(signInAsync({ data }));
+  const { register, handleSubmit } = useForm<SignInForm>()
+  const onSubmit: SubmitHandler<SignInForm> = (data) =>
+    dispatch(signInAsync({ data }))
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,7 +37,12 @@ export const SignIn: React.FC = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               label="email"
@@ -45,7 +50,7 @@ export const SignIn: React.FC = () => {
               autoComplete="email"
               autoFocus
               {...register('email', {
-                required: true
+                required: true,
               })}
             />
             <TextField
@@ -55,7 +60,7 @@ export const SignIn: React.FC = () => {
               type="password"
               autoComplete="current-password"
               {...register('password', {
-                required: true
+                required: true,
               })}
             />
             <FormControlLabel
@@ -72,20 +77,15 @@ export const SignIn: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to='#'>
-                  Forgot password?
-                </Link>
+                <Link to="#">Forgot password?</Link>
               </Grid>
               <Grid item>
-                <Link to='/sign-up/'>
-                  Don't have an account? Sign Up
-                </Link>
+                <Link to="/sign-up/">Don't have an account? Sign Up</Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Container>
-    </ThemeProvider >
-  );
+    </ThemeProvider>
+  )
 }
-
