@@ -7,15 +7,19 @@ import PeopleIcon from '@mui/icons-material/People'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { AppLayout, MainLayout } from 'components/layout'
 import { HeaderBar, SideBar } from 'components/bar'
+import { useAppSelector } from 'app/hooks'
 
 export const PageLayout: React.FC = (props) => {
   const { children } = props
+  const dashboard = useAppSelector((state) => state.dashboard.dashboard)
   const [open, setOpen] = useState(false)
   const toggle = () => setOpen((prev) => !prev)
 
+  const dashboardTittle = dashboard.tittle ? dashboard.tittle : '名称未設定'
+
   return (
     <AppLayout>
-      <HeaderBar open={open} toggle={toggle} />
+      <HeaderBar open={open} toggle={toggle} boardName={dashboardTittle} />
       <SideBar open={open} toggle={toggle}>
         <ListItem button>
           <ListItemIcon>

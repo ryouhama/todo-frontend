@@ -4,13 +4,26 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Card } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { createCardLstAsync } from 'features/dashboard/dashboardSlice'
+import { CreateCardListForm, IDashboard } from 'types/card'
+import { useAppDispatch } from 'app/hooks'
 
-export const Presenter: React.FC = (props) => {
+const CARD_LIST_WIDTH = 320
+
+type PresenterProps = {
+  dashboard: IDashboard
+}
+
+export const Presenter: React.FC<PresenterProps> = (props) => {
+  const { dashboard } = props
+
   return (
     <PageLayout>
-      <Dashboard cardList={[]} />
+      <Dashboard cardLists={dashboard.cardLists} />
     </PageLayout>
   )
 }
@@ -21,11 +34,11 @@ interface ICardList {
 }
 
 type DashboardProps = {
-  cardList: ICardList[]
+  cardLists: ICardList[]
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { cardList } = props
+  const { cardLists } = props
 
   return (
     <Box
@@ -37,49 +50,60 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         height: 640,
       }}
     >
-      {cardList.length === 0 && <AddCardList />}
-      {cardList.map((cardList, index) => (
+      {cardLists.map((cardList, index) => (
         <CardList
           key={`cardList-${index}`}
           name={cardList.tittle}
           cards={cardList.cards}
         />
       ))}
+      <AddCardList />
     </Box>
   )
 }
 
-const AddCardList: React.FC = () => {
+const AddCardList: React.VFC = (props) => {
   const { register, reset, handleSubmit } = useForm<{ tittle: string }>()
   const [open, setOpen] = useState(false)
-  const toggleForm = () => {
-    setOpen((prev) => !prev)
+  const openForm = () => {
+    // 上位のDOMでcloseのonClockが反応してしまうため、ifで判定
+    if (!open) setOpen(true)
+  }
+  const closeForm = () => {
+    setOpen(false)
     reset()
   }
-
-  const onSubmit: SubmitHandler<{ tittle: string }> = (data) =>
-    console.log(data)
+  const dispatch = useAppDispatch()
+  const onSubmit: SubmitHandler<CreateCardListForm> = (data) => {
+    dispatch(createCardLstAsync({ dashboardId: 1, data: data }))
+    setOpen(false)
+    reset()
+  }
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ minWidth: 270, display: 'block' }}
+      sx={{ minWidth: CARD_LIST_WIDTH, display: 'block' }}
     >
       <Card
         sx={{ m: 2, p: 2, backgroundColor: '#ffffff3d' }}
-        onClick={toggleForm}
+        onClick={openForm}
       >
         リストを追加
         {open && (
-          <TextField
-            margin="normal"
-            label="リストのタイトル"
-            placeholder="リストのタイトルを入力"
-            fullWidth
-            autoFocus
-            {...register('tittle')}
-          />
+          <>
+            <TextField
+              margin="normal"
+              placeholder="リストのタイトルを入力..."
+              fullWidth
+              autoFocus
+              {...register('tittle')}
+            />
+            <IconButton onClick={closeForm}>
+              <CloseIcon />
+            </IconButton>
+          </>
         )}
       </Card>
     </Box>
@@ -104,7 +128,7 @@ const CardList: React.FC<CardListProps> = (props) => {
   }
 
   return (
-    <Box sx={{ minWidth: 270, display: 'block' }}>
+    <Box sx={{ minWidth: 270, display: 'block', width: CARD_LIST_WIDTH }}>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}

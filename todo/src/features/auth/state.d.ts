@@ -1,7 +1,7 @@
-import { User } from 'types/user'
+import { IUser } from 'types/user'
 
 export interface AuthState {
-  user: User
+  user: IUser
   loading: AuthLoading
 }
 

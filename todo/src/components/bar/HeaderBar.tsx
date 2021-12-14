@@ -31,11 +31,11 @@ const AppBar = styled(MuiAppBar, {
 interface HeaderBarProps {
   open: boolean
   toggle: () => void
-  boardName?: string
+  boardName: string
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = (props) => {
-  const { open, toggle, boardName = '名称未設定' } = props
+  const { open, toggle, boardName } = props
 
   return (
     <AppBar position="absolute" open={open}>
