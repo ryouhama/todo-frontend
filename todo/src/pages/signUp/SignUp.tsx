@@ -8,10 +8,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Navigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { SignUpForm } from 'types/auth'
 import { useAppDispatch } from 'app/hooks'
+import { hasAccessToken } from 'router/storage'
 import { signUpAsync } from 'features/auth/authSlice'
 
 const theme = createTheme()
@@ -21,6 +23,9 @@ export const SignUp: React.FC = () => {
   const { register, handleSubmit } = useForm<SignUpForm>()
   const onSubmit: SubmitHandler<SignUpForm> = (data) =>
     dispatch(signUpAsync({ data }))
+
+  // アクセストークンが存在する場合は、ダッシュボードにリダイレクトする
+  if (hasAccessToken()) return <Navigate to={'/board'} />
 
   return (
     <ThemeProvider theme={theme}>
