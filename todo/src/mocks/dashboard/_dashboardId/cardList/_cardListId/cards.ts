@@ -5,13 +5,23 @@ import * as types from 'types/card'
 const createCardList: MockMethods = {
   post: async (request): Promise<MockResponse> => {
     const cardLists = store.getState().dashboard.dashboard.cardLists
+
+    // cardListsの中でIDの最大値のリストを作成し、さらにその中から最大値を取得する
     const maxId =
-      cardLists.length >= 1 ? Math.max(...cardLists.map((it) => it.id)) : 0
-    const response: types.CreateCardListResponse = {
-      cardList: {
+      cardLists.length >= 1
+        ? Math.max(
+            ...cardLists.map((cardList) => {
+              return cardList.cards.length >= 1
+                ? Math.max(...cardList.cards.map((it) => it.id))
+                : 0
+            })
+          )
+        : 0
+
+    const response: types.CreateCardResponse = {
+      card: {
         id: maxId + 1,
         tittle: request.data.tittle,
-        cards: [],
       },
     }
     return [200, response]

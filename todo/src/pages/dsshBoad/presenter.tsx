@@ -8,11 +8,14 @@ import IconButton from '@mui/material/IconButton'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Card } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { createCardLstAsync } from 'features/dashboard/dashboardSlice'
-import { CreateCardListForm, IDashboard } from 'types/card'
+import {
+  createCardLstAsync,
+  createCardAsync,
+} from 'features/dashboard/dashboardSlice'
+import { CreateCardListForm, ICard, ICardList, IDashboard } from 'types/card'
 import { useAppDispatch } from 'app/hooks'
 
-const CARD_LIST_WIDTH = 320
+const CARD_LIST_WIDTH = 360
 
 type PresenterProps = {
   dashboard: IDashboard
@@ -26,11 +29,6 @@ export const Presenter: React.FC<PresenterProps> = (props) => {
       <Dashboard cardLists={dashboard.cardLists} />
     </PageLayout>
   )
-}
-
-interface ICardList {
-  tittle: string
-  cards: ICard[]
 }
 
 type DashboardProps = {
@@ -54,6 +52,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <CardList
           key={`cardList-${index}`}
           name={cardList.tittle}
+          cardListId={cardList.id}
           cards={cardList.cards}
         />
       ))}
@@ -84,10 +83,15 @@ const AddCardList: React.VFC = (props) => {
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ minWidth: CARD_LIST_WIDTH, display: 'block' }}
+      sx={{ display: 'block' }}
     >
       <Card
-        sx={{ m: 2, p: 2, backgroundColor: '#ffffff3d' }}
+        sx={{
+          minWidth: CARD_LIST_WIDTH,
+          m: 2,
+          p: 2,
+          backgroundColor: '#ffffff3d',
+        }}
         onClick={openForm}
       >
         リストを追加
@@ -96,6 +100,7 @@ const AddCardList: React.VFC = (props) => {
             <TextField
               margin="normal"
               placeholder="リストのタイトルを入力..."
+              sx={{ maxWidth: 320 }}
               fullWidth
               autoFocus
               {...register('tittle')}
@@ -112,15 +117,22 @@ const AddCardList: React.VFC = (props) => {
 
 type CardListProps = {
   name: string
+  cardListId: number
   cards: ICard[]
 }
 
 const CardList: React.FC<CardListProps> = (props) => {
-  const { name, cards } = props
+  const { name, cardListId, cards } = props
   const [open, setOpen] = useState(false)
   const { register, reset, handleSubmit } = useForm<{ tittle: string }>()
-  const onSubmit: SubmitHandler<{ tittle: string }> = (data) =>
-    console.log(data)
+
+  const dispatch = useAppDispatch()
+  const onSubmit: SubmitHandler<{ tittle: string }> = (data) => {
+    dispatch(
+      createCardAsync({ dashboardId: 1, cardListId: cardListId, data: data })
+    )
+    toggleButton()
+  }
 
   const toggleButton = () => {
     setOpen((prev) => !prev)
@@ -128,7 +140,12 @@ const CardList: React.FC<CardListProps> = (props) => {
   }
 
   return (
-    <Box sx={{ minWidth: 270, display: 'block', width: CARD_LIST_WIDTH }}>
+    <Box
+      sx={{
+        minWidth: CARD_LIST_WIDTH,
+        display: 'block',
+      }}
+    >
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -146,19 +163,18 @@ const CardList: React.FC<CardListProps> = (props) => {
           cards.map((card, index) => (
             <CardItem key={`card-${index}`} card={card} />
           ))}
-        <Button sx={{ mt: 2 }} variant="outlined" onClick={toggleButton}>
-          カードを追加
-        </Button>
         {open && (
           <TextField
             margin="normal"
-            label="タイトル"
-            placeholder="タイトルを入力"
+            placeholder="タイトルを入力..."
             fullWidth
             autoFocus
             {...register('tittle')}
           />
         )}
+        <Button sx={{ mt: 2 }} variant="outlined" onClick={toggleButton}>
+          カードを追加
+        </Button>
       </Box>
     </Box>
   )
@@ -171,8 +187,4 @@ type CardItemProps = {
 const CardItem: React.FC<CardItemProps> = (props) => {
   const { card } = props
   return <Card sx={{ mt: 2, p: 2, width: '100%' }}>{card.tittle}</Card>
-}
-
-interface ICard {
-  tittle: string
 }
