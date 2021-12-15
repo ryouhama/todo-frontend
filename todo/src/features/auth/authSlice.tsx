@@ -55,9 +55,8 @@ export const authSlice = createSlice({
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
       })
-      .addCase(signInAsync.rejected, (state, action) => {
+      .addCase(signInAsync.rejected, (state) => {
         state.loading.post.signIn = false
-        console.log(action.payload?.errorMessage)
       })
       .addCase(signUpAsync.pending, (state) => {
         state.loading.post.signUp = true
@@ -67,9 +66,8 @@ export const authSlice = createSlice({
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
       })
-      .addCase(signUpAsync.rejected, (state, action) => {
+      .addCase(signUpAsync.rejected, (state) => {
         state.loading.post.signUp = false
-        console.log(action.payload?.errorMessage)
       })
   },
 })
