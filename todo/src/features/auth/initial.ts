@@ -1,7 +1,7 @@
 import { AuthLoading, AuthState } from './state'
-import { User } from 'types/user'
+import { IUser } from 'types/user'
 
-export const initialUser: User = {
+export const initialUser: IUser = {
   id: -1,
   name: '',
   email: '',
