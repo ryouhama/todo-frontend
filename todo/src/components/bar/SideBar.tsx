@@ -5,18 +5,15 @@ import List from '@mui/material/List'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-
-interface DrawerProps extends MuiDrawerProps {
-  drawerWidth: number
-}
+import { DRAWER_WIDTH } from 'components/layout/consts'
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
-})<DrawerProps>(({ theme, open, drawerWidth }) => ({
+})<MuiDrawerProps>(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'relative',
     whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -39,13 +36,13 @@ const Drawer = styled(MuiDrawer, {
 interface SideBarProps {
   open: boolean
   toggle: () => void
-  drawerWidth: number
 }
+
 export const SideBar: React.FC<SideBarProps> = (props) => {
-  const { open, toggle, drawerWidth, children } = props
+  const { open, toggle, children } = props
 
   return (
-    <Drawer variant="permanent" open={open} drawerWidth={drawerWidth}>
+    <Drawer variant="permanent" open={open}>
       <Toolbar
         sx={{
           display: 'flex',
@@ -60,7 +57,6 @@ export const SideBar: React.FC<SideBarProps> = (props) => {
       </Toolbar>
       <Divider />
       <List>{children}</List>
-      <Divider />
     </Drawer>
   )
 }
