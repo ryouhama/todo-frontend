@@ -9,5 +9,6 @@ export interface DashboardLoading {
   post: {
     create: boolean
     createCardList: boolean
+    createCard: boolean
   }
 }

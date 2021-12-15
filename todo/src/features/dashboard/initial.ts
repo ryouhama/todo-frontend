@@ -11,6 +11,7 @@ const initialLoading: DashboardLoading = {
   post: {
     create: false,
     createCardList: false,
+    createCard: false,
   },
 }
 

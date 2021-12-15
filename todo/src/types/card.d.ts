@@ -45,3 +45,15 @@ export interface CreateCardListRequest {
 export interface CreateCardListResponse {
   cardList: ICardList
 }
+
+export interface CreateCardRequest {
+  dashboardId: number
+  cardListId: number
+  data: {
+    tittle: string
+  }
+}
+
+export interface CreateCardResponse {
+  card: ICard
+}
