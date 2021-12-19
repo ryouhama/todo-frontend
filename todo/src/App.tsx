@@ -1,7 +1,11 @@
 import { AppRouter } from 'router'
+import { setupMock } from 'mocks/setup'
 
-function App() {
+export const App: React.FC = () => {
+  setUp()
   return <AppRouter />
 }
 
-export default App
+const setUp = () => {
+  setupMock()
+}
