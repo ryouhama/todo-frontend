@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import * as types from 'types/card'
 import { api } from './dashboardAPI'
-import { initialState } from './initial'
+import { initialState } from './initialState'
 
 export const createDashboardAsync = createAsyncThunk<
   types.CreateDashboardResponse,
@@ -99,4 +99,4 @@ export const dashboardSlice = createSlice({
   },
 })
 
-export default dashboardSlice.reducer
+export const dashboardReducer = dashboardSlice.reducer

@@ -1,12 +1,17 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import authReducer from 'features/auth/authSlice'
-import dashboardSlice from 'features/dashboard/dashboardSlice'
+import {
+  configureStore,
+  combineReducers,
+  ThunkAction,
+  Action,
+} from '@reduxjs/toolkit'
+import { authReducer } from 'features/auth/authSlice'
+import { dashboardReducer } from 'features/dashboard/dashboardSlice'
 
 export const store = configureStore({
-  reducer: {
+  reducer: combineReducers({
     auth: authReducer,
-    dashboard: dashboardSlice,
-  },
+    dashboard: dashboardReducer,
+  }),
 })
 
 export type AppDispatch = typeof store.dispatch
