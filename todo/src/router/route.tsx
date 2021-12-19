@@ -6,13 +6,22 @@ import { hasAccessToken } from './storage'
 
 export const AppRouter: React.VFC = () => {
   const hasToken = hasAccessToken()
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {!hasToken && <Navigate to={'/'} />}
       <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/sign-up/" element={<SignUp />} />
-        <Route path="/board/" element={<DashBoad />} />
+        {hasToken ? (
+          <>
+            <Route path="/dashboard/" element={<DashBoad />} />
+            <Route path="*" element={<Navigate to="/dashboard/" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/sign-in/" element={<SignIn />} />
+            <Route path="/sign-up/" element={<SignUp />} />
+            <Route path="*" element={<Navigate to="/sign-in/" />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   )

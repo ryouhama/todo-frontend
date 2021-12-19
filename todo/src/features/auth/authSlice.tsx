@@ -7,7 +7,11 @@ import {
   SignUpResponse,
 } from 'types/auth'
 import { api } from './authAPI'
-import { initialState } from './initial'
+import { initialState } from './initialState'
+
+export const redirectToHome = () => {
+  window.location.href = '/todo-frontend/dashboard/'
+}
 
 export const signInAsync = createAsyncThunk<
   SignInResponse,
@@ -54,6 +58,7 @@ export const authSlice = createSlice({
         state.loading.post.signIn = false
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
+        redirectToHome()
       })
       .addCase(signInAsync.rejected, (state) => {
         state.loading.post.signIn = false
@@ -65,6 +70,7 @@ export const authSlice = createSlice({
         state.loading.post.signUp = false
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
+        redirectToHome()
       })
       .addCase(signUpAsync.rejected, (state) => {
         state.loading.post.signUp = false
@@ -72,4 +78,4 @@ export const authSlice = createSlice({
   },
 })
 
-export default authSlice.reducer
+export const authReducer = authSlice.reducer
