@@ -1,7 +1,8 @@
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp/SignUp'
-import { Container as DashBoad } from 'pages/dsshBoad'
+import { DashBoard } from 'pages/dsshBoard'
+import { WorkSpace } from 'pages/workSpace'
 import { hasAccessToken } from './storage'
 
 export const AppRouter: React.VFC = () => {
@@ -12,14 +13,15 @@ export const AppRouter: React.VFC = () => {
       <Routes>
         {hasToken ? (
           <>
-            <Route path="/dashboard/" element={<DashBoad />} />
-            <Route path="*" element={<Navigate to="/dashboard/" />} />
+            <Route path="/workspace/:id/dashboard" element={<DashBoard />} />
+            <Route path="/workspace" element={<WorkSpace />} />
+            <Route path="*" element={<Navigate to="/workspace" />} />
           </>
         ) : (
           <>
-            <Route path="/sign-in/" element={<SignIn />} />
-            <Route path="/sign-up/" element={<SignUp />} />
-            <Route path="*" element={<Navigate to="/sign-in/" />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="*" element={<Navigate to="/sign-in" />} />
           </>
         )}
       </Routes>
