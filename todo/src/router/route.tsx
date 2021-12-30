@@ -9,8 +9,11 @@ import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp/SignUp'
 import { Container as DashBoad } from 'pages/dsshBoad'
 import { hasAccessToken } from './storage'
+import { useAppSelector } from 'app/hooks'
 
 export const AppRouter: React.VFC = () => {
+  const user = useAppSelector((state) => state.auth.user)
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
@@ -29,13 +32,13 @@ export const AppRouter: React.VFC = () => {
   )
 }
 
-const PrivateRouter: React.FC = (props) => {
+const PrivateRouter: React.FC = () => {
   const hasToken = hasAccessToken()
 
   return hasToken ? <Outlet /> : <Navigate to="auth" />
 }
 
-const PublicRouter: React.FC = (props) => {
+const PublicRouter: React.FC = () => {
   const hasToken = hasAccessToken()
 
   return hasToken ? <Navigate to="/" /> : <Outlet />

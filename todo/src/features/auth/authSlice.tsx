@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { setAccessToken } from 'router/storage'
+import { deleteAccessToken, setAccessToken } from 'router/storage'
 import {
   SignInRequest,
   SignInResponse,
@@ -7,7 +7,7 @@ import {
   SignUpResponse,
 } from 'types/auth'
 import { api } from './authAPI'
-import { initialState } from './initialState'
+import { initialState, initialUser } from './initialState'
 
 export const signInAsync = createAsyncThunk<
   SignInResponse,
@@ -44,7 +44,12 @@ export const signUpAsync = createAsyncThunk<
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    signOut: (state) => {
+      state.user = initialUser
+      deleteAccessToken()
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signInAsync.pending, (state) => {
@@ -73,3 +78,4 @@ export const authSlice = createSlice({
 })
 
 export const authReducer = authSlice.reducer
+export const { signOut } = authSlice.actions
