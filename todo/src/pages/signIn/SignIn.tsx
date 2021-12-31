@@ -80,7 +80,7 @@ export const SignIn: React.FC = () => {
                 <Link to="#">Forgot password?</Link>
               </Grid>
               <Grid item>
-                <Link to="/sign-up/">Don't have an account? Sign Up</Link>
+                <Link to="/auth/sign-up/">Don't have an account? Sign Up</Link>
               </Grid>
             </Grid>
           </Box>

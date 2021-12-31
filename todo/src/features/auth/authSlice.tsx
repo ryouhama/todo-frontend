@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { setAccessToken } from 'router/storage'
+import { deleteAccessToken, setAccessToken } from 'router/storage'
 import {
   SignInRequest,
   SignInResponse,
@@ -7,11 +7,7 @@ import {
   SignUpResponse,
 } from 'types/auth'
 import { api } from './authAPI'
-import { initialState } from './initialState'
-
-export const redirectToHome = () => {
-  window.location.href = '/todo-frontend/dashboard/'
-}
+import { initialState, initialUser } from './initialState'
 
 export const signInAsync = createAsyncThunk<
   SignInResponse,
@@ -48,7 +44,12 @@ export const signUpAsync = createAsyncThunk<
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    signOut: (state) => {
+      state.user = initialUser
+      deleteAccessToken()
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signInAsync.pending, (state) => {
@@ -58,7 +59,6 @@ export const authSlice = createSlice({
         state.loading.post.signIn = false
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
-        redirectToHome()
       })
       .addCase(signInAsync.rejected, (state) => {
         state.loading.post.signIn = false
@@ -70,7 +70,6 @@ export const authSlice = createSlice({
         state.loading.post.signUp = false
         state.user = action.payload.user
         setAccessToken({ accessToken: action.payload.accessToken })
-        redirectToHome()
       })
       .addCase(signUpAsync.rejected, (state) => {
         state.loading.post.signUp = false
@@ -79,3 +78,4 @@ export const authSlice = createSlice({
 })
 
 export const authReducer = authSlice.reducer
+export const { signOut } = authSlice.actions
