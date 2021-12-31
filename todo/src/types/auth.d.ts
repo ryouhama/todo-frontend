@@ -1,4 +1,5 @@
 import { User } from 'features/auth/authSlice'
+import { IUser } from './user'
 
 // Interface
 export interface LocalStorage {
@@ -25,15 +26,18 @@ export interface SignInRequest {
 export interface SignInResponse {
   user: User
   accessToken: string
+  workSpaceId: number
 }
 
 export interface SignUpRequest {
   data: SignUpForm
 }
 
-export interface SignUpResponse {
-  user: User
-  accessToken: string
+export interface SignUpResponse extends SignInResponse {}
+
+export interface GetUserResponse {
+  user: IUser
+  workSpaceId: number
 }
 
 export interface SignUpError {

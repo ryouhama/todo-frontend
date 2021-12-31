@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -11,15 +11,23 @@ import { useAppSelector } from 'app/hooks'
 
 export const PageLayout: React.FC = (props) => {
   const { children } = props
+
+  const workSpace = useAppSelector((state) => state.workSpace.workSpace)
   const dashboard = useAppSelector((state) => state.dashboard.dashboard)
   const [open, setOpen] = useState(false)
   const toggle = () => setOpen((prev) => !prev)
 
-  const dashboardTittle = dashboard.tittle ? dashboard.tittle : '名称未設定'
+  const createTittle = useCallback(() => {
+    if (!workSpace.name) return ''
+
+    if (!dashboard.tittle) return workSpace.name
+
+    return `${workSpace.name} > ${dashboard.tittle}`
+  }, [workSpace, dashboard])
 
   return (
     <AppLayout>
-      <HeaderBar open={open} toggle={toggle} boardName={dashboardTittle} />
+      <HeaderBar open={open} toggle={toggle} boardName={createTittle()} />
       <SideBar open={open} toggle={toggle}>
         <ListItem button>
           <ListItemIcon>

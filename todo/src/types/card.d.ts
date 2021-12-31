@@ -24,16 +24,6 @@ export interface CreateCardListForm {
 }
 
 // Request, Response Interface Interface
-export interface CreateDashboardRequest {
-  data: {
-    tittle: string
-  }
-  createUser: IUser
-}
-
-export interface CreateDashboardResponse {
-  dashboard: IDashboard
-}
 
 export interface CreateCardListRequest {
   dashboardId: number

@@ -13,14 +13,20 @@ import { Link } from 'react-router-dom'
 import { SignInForm } from 'types/auth'
 import { useAppDispatch } from 'app/hooks'
 import { signInAsync } from 'features/auth/authSlice'
+import { workSpaceAction } from 'features/workSpace/workSpaceSlice'
 
 const theme = createTheme()
 
 export const SignIn: React.FC = () => {
   const dispatch = useAppDispatch()
   const { register, handleSubmit } = useForm<SignInForm>()
-  const onSubmit: SubmitHandler<SignInForm> = (data) =>
-    dispatch(signInAsync({ data }))
+
+  const onSuccess = (workSpaceId: number): void => {
+    dispatch(workSpaceAction.getWorkSpaceId({ workSpaceId }))
+  }
+
+  const onSubmit: SubmitHandler<SignInForm> = (data: SignInForm) =>
+    dispatch(signInAsync({ data: { data }, onSuccess: onSuccess }))
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,7 +86,7 @@ export const SignIn: React.FC = () => {
                 <Link to="#">Forgot password?</Link>
               </Grid>
               <Grid item>
-                <Link to="/sign-up/">Don't have an account? Sign Up</Link>
+                <Link to="/auth/sign-up/">Don't have an account? Sign Up</Link>
               </Grid>
             </Grid>
           </Box>

@@ -13,14 +13,19 @@ import { Link } from 'react-router-dom'
 import { SignUpForm } from 'types/auth'
 import { useAppDispatch } from 'app/hooks'
 import { signUpAsync } from 'features/auth/authSlice'
+import { workSpaceAction } from 'features/workSpace/workSpaceSlice'
 
 const theme = createTheme()
 
 export const SignUp: React.FC = () => {
   const dispatch = useAppDispatch()
   const { register, handleSubmit } = useForm<SignUpForm>()
+
+  const onSuccess = (workSpaceId: number): void => {
+    dispatch(workSpaceAction.getWorkSpaceId({ workSpaceId }))
+  }
   const onSubmit: SubmitHandler<SignUpForm> = (data) =>
-    dispatch(signUpAsync({ data }))
+    dispatch(signUpAsync({ data: { data }, onSuccess: onSuccess }))
 
   return (
     <ThemeProvider theme={theme}>
@@ -88,7 +93,7 @@ export const SignUp: React.FC = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/">Already have an account? Sign in</Link>
+                <Link to="/auth/sign-in">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
           </Box>
