@@ -3,10 +3,13 @@ import { PageLayout } from 'components/layout'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Card } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import {
   createCardLstAsync,
@@ -123,7 +126,29 @@ type CardListProps = {
 
 const CardList: React.FC<CardListProps> = (props) => {
   const { name, cardListId, cards } = props
-  const [open, setOpen] = useState(false)
+
+  // メニュー
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const openEditMenu = Boolean(anchorEl)
+  const handleOpenEditMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleCloseEditMenu = () => {
+    setAnchorEl(null)
+  }
+
+  // カード追加
+  const [openAddCard, setOpenAddCard] = useState(false)
+  const handleOpenAddCard = () => {
+    if (openEditMenu) handleCloseEditMenu()
+    // HACK: useStateが非同期処理で、autoFocusが効かないため
+    setTimeout(() => setOpenAddCard(true))
+  }
+  const handleCloseAddCard = () => {
+    setOpenAddCard(false)
+    reset()
+  }
+
   const { register, reset, handleSubmit } = useForm<{ tittle: string }>()
 
   const dispatch = useAppDispatch()
@@ -131,12 +156,14 @@ const CardList: React.FC<CardListProps> = (props) => {
     dispatch(
       createCardAsync({ dashboardId: 1, cardListId: cardListId, data: data })
     )
-    toggleButton()
+    handleCloseAddCard()
   }
 
-  const toggleButton = () => {
-    setOpen((prev) => !prev)
-    reset()
+  const editName = () => {
+    console.log('TODO: edit Name')
+  }
+  const deleteCardList = () => {
+    console.log('TODO: delete')
   }
 
   return (
@@ -158,23 +185,61 @@ const CardList: React.FC<CardListProps> = (props) => {
           m: 2,
         }}
       >
-        <Typography>{name}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <Typography
+            sx={{
+              width: 240,
+              overflowWrap: 'break-word',
+              fontSize: 20,
+              fontWeight: 600,
+            }}
+          >
+            {name}
+          </Typography>
+          <IconButton sx={{ height: 40, ml: 2 }} onClick={handleOpenEditMenu}>
+            <EditIcon />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openEditMenu}
+            onClose={handleCloseEditMenu}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={editName}>編集</MenuItem>
+            <MenuItem onClick={handleOpenAddCard}>カードを追加</MenuItem>
+            <MenuItem onClick={deleteCardList}>削除</MenuItem>
+          </Menu>
+        </Box>
         {cards.length >= 1 &&
           cards.map((card, index) => (
             <CardItem key={`card-${index}`} card={card} />
           ))}
-        {open && (
-          <TextField
-            margin="normal"
-            placeholder="タイトルを入力..."
-            fullWidth
-            autoFocus
-            {...register('tittle')}
-          />
+        {openAddCard ? (
+          <>
+            <TextField
+              margin="normal"
+              placeholder="タイトルを入力..."
+              fullWidth
+              autoFocus
+              {...register('tittle')}
+            />
+            <IconButton onClick={handleCloseAddCard}>
+              <CloseIcon />
+            </IconButton>
+          </>
+        ) : (
+          <Button sx={{ mt: 2 }} variant="outlined" onClick={handleOpenAddCard}>
+            カードを追加
+          </Button>
         )}
-        <Button sx={{ mt: 2 }} variant="outlined" onClick={toggleButton}>
-          カードを追加
-        </Button>
       </Box>
     </Box>
   )
@@ -186,5 +251,19 @@ type CardItemProps = {
 
 const CardItem: React.FC<CardItemProps> = (props) => {
   const { card } = props
-  return <Card sx={{ mt: 2, p: 2, width: '100%' }}>{card.tittle}</Card>
+  return (
+    <Card
+      sx={{
+        mt: 2,
+        p: 2,
+        display: 'block',
+        width: 296, // HACK: 100%指定できないから、固定値で指定
+        fontSize: 16,
+        fontWeight: 600,
+        overflowWrap: 'break-word',
+      }}
+    >
+      {card.tittle}
+    </Card>
+  )
 }

@@ -7,19 +7,28 @@ import {
 } from 'react-router-dom'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp/SignUp'
-import { Container as DashBoad } from 'pages/dsshBoad'
+import { DashBoard } from 'pages/dsshBoard'
+import { WorkSpace } from 'pages/workSpace'
 import { hasAccessToken } from './storage'
 import { useAppSelector } from 'app/hooks'
 
 export const AppRouter: React.VFC = () => {
   const user = useAppSelector((state) => state.auth.user)
+  const workSpaceId = useAppSelector((state) => state.workSpace.workSpace.id)
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<PrivateRouter />}>
-          <Route path="dashboard" element={<DashBoad />} />
-          <Route path="" element={<Navigate to="dashboard" />} />
+          <Route path="workspace/:workSpaceId" element={<WorkSpace />} />
+          <Route
+            path="workspace/:workSpaceId/dashboards/:id"
+            element={<DashBoard />}
+          />
+          <Route
+            path=""
+            element={<Navigate to={`workspace/${workSpaceId}`} />}
+          />
         </Route>
         <Route path="auth" element={<PublicRouter />}>
           <Route path="sign-in" element={<SignIn />} />

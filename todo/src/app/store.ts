@@ -6,11 +6,13 @@ import {
 } from '@reduxjs/toolkit'
 import { authReducer } from 'features/auth/authSlice'
 import { dashboardReducer } from 'features/dashboard/dashboardSlice'
+import { workSpaceReducer } from 'features/workSpace/workSpaceSlice'
 
 export const store = configureStore({
   reducer: combineReducers({
     auth: authReducer,
     dashboard: dashboardReducer,
+    workSpace: workSpaceReducer,
   }),
 })
 

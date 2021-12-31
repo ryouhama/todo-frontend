@@ -10,6 +10,7 @@ const signIn: MockMethods = {
         email: request.data.email,
       },
       accessToken: 'hogehoge',
+      workSpaceId: 1,
     }
     return [200, response]
   },
