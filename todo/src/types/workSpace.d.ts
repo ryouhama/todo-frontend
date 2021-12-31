@@ -8,11 +8,12 @@ export interface IWorkSpace {
 
 // Request, Response Interface Interface
 export interface GetWorkSpaceRequest {
-  userId: number
+  workSpaceId: number
 }
 
 export interface GetWorkSpaceResponse {
   workSpace: IWorkSpace
+  dashboards: IDashboard[]
 }
 
 export interface CreateDashboardRequest {

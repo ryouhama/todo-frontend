@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as types from 'types/workSpace'
 import { initialState } from './initialState'
 import { api } from './workSpaceApi'
@@ -39,13 +39,15 @@ export const workSpaceSlice = createSlice({
   name: 'workSpace',
   initialState,
   reducers: {
-    getWorkSpaceId: (state, action) =>
-      (state.workSpace.id = action.payload.workSpaceId),
+    getWorkSpaceId: (state, action: PayloadAction<{ workSpaceId: number }>) => {
+      state.workSpace.id = action.payload.workSpaceId
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getWorkSpaceAsync.fulfilled, (state, action) => {
         state.workSpace = action.payload.workSpace
+        state.dashboards = action.payload.dashboards
       })
       .addCase(createDashboardAsync.pending, (state) => {
         state.loading.post.createDashboard = true

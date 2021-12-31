@@ -3,13 +3,18 @@ import { GetWorkSpaceResponse } from 'types/workSpace'
 
 const signIn: MockMethods = {
   get: async (request): Promise<MockResponse> => {
-    const userId = Number(request.values.userId)
-
     const response: GetWorkSpaceResponse = {
       workSpace: {
-        id: userId,
+        id: 1,
         name: 'テスト太郎',
       },
+      dashboards: [
+        {
+          id: 1,
+          tittle: 'TODO',
+          cardLists: [],
+        },
+      ],
     }
     return [200, response]
   },

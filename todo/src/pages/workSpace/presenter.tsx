@@ -30,10 +30,7 @@ export const Presenter: React.FC<Props> = (props) => {
       ボード一覧
       <div>
         {dashboards.map((dashboard) => (
-          <Link
-            key={`${dashboard.id}`}
-            to={`workspace/${dashboard.id}/dashboard/`}
-          >
+          <Link key={`${dashboard.id}`} to={`dashboards/${dashboard.id}`}>
             {dashboard.tittle}
           </Link>
         ))}
