@@ -15,12 +15,18 @@ import { useAppSelector } from 'app/hooks'
 export const AppRouter: React.VFC = () => {
   const user = useAppSelector((state) => state.auth.user)
 
+  const workSpaceId = useAppSelector((state) => state.workSpace.workSpace.id)
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<PrivateRouter />}>
-          <Route path="dashboard" element={<DashBoard />} />
-          <Route path="" element={<Navigate to="dashboard" />} />
+          <Route path="workspace" element={<WorkSpace />}>
+            <Route path="dashboards">
+              <Route path=":id" element={<DashBoard />} />
+            </Route>
+          </Route>
+          <Route path="" element={<Navigate to="workspace" />} />
         </Route>
         <Route path="auth" element={<PublicRouter />}>
           <Route path="sign-in" element={<SignIn />} />

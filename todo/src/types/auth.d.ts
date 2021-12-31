@@ -25,16 +25,14 @@ export interface SignInRequest {
 export interface SignInResponse {
   user: User
   accessToken: string
+  workSpaceId: number
 }
 
 export interface SignUpRequest {
   data: SignUpForm
 }
 
-export interface SignUpResponse {
-  user: User
-  accessToken: string
-}
+export interface SignUpResponse extends SignInResponse {}
 
 export interface SignUpError {
   error: string

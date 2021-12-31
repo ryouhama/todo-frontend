@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { workSpaceAction } from 'features/workSpace/workSpaceSlice'
 import { deleteAccessToken, setAccessToken } from 'router/storage'
 import {
   SignInRequest,
@@ -17,11 +18,12 @@ export const signInAsync = createAsyncThunk<
   const response = await api
     .signIn(data)
     .then((res) => {
+      workSpaceAction.getWorkSpaceId({ workSpaceId: res.data.workSpaceId })
       return res.data
     })
-    .catch((e) => {
-      return thunkApi.rejectWithValue({ errorMessage: 'Auth Error: Sign In' })
-    })
+    .catch((e) =>
+      thunkApi.rejectWithValue({ errorMessage: 'Auth Error: Sign In' })
+    )
   return response
 })
 
@@ -33,6 +35,7 @@ export const signUpAsync = createAsyncThunk<
   const response = await api
     .signUp(data)
     .then((res) => {
+      workSpaceAction.getWorkSpaceId({ workSpaceId: res.data.workSpaceId })
       return res.data
     })
     .catch((e) => {
